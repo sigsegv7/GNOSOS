@@ -46,4 +46,15 @@ EFI_STATUS FileServiceClose(EFI_FILE_HANDLE Handle);
  */
 UINTN FileServiceGetLength(EFI_FILE_HANDLE Handle);
 
+/*
+ * Read the contents of a file into a buffer
+ *
+ * @Handle:  File handle of file to read
+ * @Length:  Number of bytes to read
+ * @Buffer:  Buffer to store file data
+ *
+ * Returns the number of bytes read on success and zero on failure
+ */
+UINTN FileServiceRead(EFI_FILE_HANDLE Handle, UINTN Length, VOID *Buffer);
+
 #endif  /* !_CORE_FILE_H_ */

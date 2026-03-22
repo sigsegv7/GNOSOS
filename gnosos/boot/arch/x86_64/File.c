@@ -125,3 +125,27 @@ FileServiceGetLength(EFI_FILE_HANDLE Handle)
 
     return FileSize;
 }
+
+UINTN
+FileServiceRead(EFI_FILE_HANDLE Handle, UINTN Length, VOID *Buffer)
+{
+    EFI_STATUS Status;
+    UINTN LengthRead;
+
+    if (Handle == NULL || Buffer == NULL) {
+        return EFI_INVALID_PARAMETER;
+    }
+
+    LengthRead = Length;
+    Status = Handle->Read(
+        Handle,
+        &LengthRead,
+        Buffer
+    );
+
+    if (EFI_ERROR(Status)) {
+        return 0;
+    }
+
+    return LengthRead;
+}
