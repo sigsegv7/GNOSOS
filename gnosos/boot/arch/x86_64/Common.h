@@ -14,13 +14,21 @@
 #include <Uefi.h>
 #include <Library/UefiLib.h>
 
+/* Knobs and settings */
+#define QUICKSTRAP_TARGET L"dtkrnl.sys"
+
+/* Pointer offset macros */
+#define PTR_OFFSET(p, off) ((void *)(char *)(p) + (off))
+#define PTR_NOFFSET(p, off) ((void *)(char *)(p) - (off))
+
+/* Align up/down a value */
+#define ALIGN_DOWN(value, align)      ((value) & ~((align)-1))
+#define ALIGN_UP(value, align)        (((value) + (align)-1) & ~((align)-1))
+
 /* Storage size units */
 #define UNIT_GIB 0x40000000
 #define UNIT_MIB 0x100000
 #define UNIT_KIB 0x400
-
-/* Knobs and settings */
-#define QUICKSTRAP_TARGET L"dtkrnl.sys"
 
 extern EFI_SYSTEM_TABLE *gST;
 extern EFI_BOOT_SERVICES *gBS;
