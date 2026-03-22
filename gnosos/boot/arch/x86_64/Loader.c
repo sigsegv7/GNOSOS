@@ -11,6 +11,9 @@
 
 #include <Uefi.h>
 #include <Library/UefiLib.h>
+#include <Library/BaseLib.h>
+#include <Library/BaseMemoryLib.h>
+#include "Elf.h"
 #include "Common.h"
 #include "File.h"
 #include "Loader.h"
@@ -36,6 +39,61 @@ PrintKernelSize(void)
     } else {
         Print(L"%d bytes\n", KernelLength);
     }
+}
+
+/*
+ * Check the validity of an ELF64 header
+ *
+ * @Ehdr: Header to check
+ */
+static EFI_STATUS
+LoaderVerifyElf64(Elf64_Ehdr *Ehdr)
+{
+    if (Ehdr == NULL) {
+        return EFI_INVALID_PARAMETER;
+    }
+
+    if (CompareMem(&Ehdr->e_ident[EI_MAG0], ELFMAG, SELFMAG) != 0) {
+        PRINT_FATAL("Bad kernel executable magic\n");
+        return EFI_INVALID_PARAMETER;
+    }
+
+    if (Ehdr->e_type != ET_EXEC) {
+        PRINT_FATAL("Kernel is not executable\n");
+        return EFI_INVALID_PARAMETER;
+    }
+
+    if (Ehdr->e_machine != EM_X86_64) {
+        PRINT_FATAL("Kernel binary is not for x86_64\n");
+        return EFI_INVALID_PARAMETER;
+    }
+
+    if (Ehdr->e_version != EV_CURRENT) {
+        PRINT_FATAL("Bad version in kernel binary\n");
+        return EFI_INVALID_PARAMETER;
+    }
+
+    return EFI_SUCCESS;
+}
+
+/*
+ * Prepare ELf operation
+ */
+static EFI_STATUS
+LoaderElfPrepare(void)
+{
+    Elf64_Ehdr *Ehdr;
+    EFI_STATUS Status;
+
+    /* Is this a valid ELF64 binary? */
+    Ehdr = (Elf64_Ehdr *)KernelBinBase;
+    Status = LoaderVerifyElf64(Ehdr);
+
+    if (EFI_ERROR(Status)) {
+        return Status;
+    }
+
+    return EFI_SUCCESS;
 }
 
 EFI_STATUS
@@ -78,5 +136,14 @@ LoaderPrepare(void)
     }
 
     PrintKernelSize();
+    Status = LoaderElfPrepare();
+
+    if (EFI_ERROR(Status)) {
+        FileServiceClose(FileHandle);
+        gBS->FreePool(KernelBinBase);
+        KernelBinBase = NULL;
+        return Status;
+    }
+
     return EFI_SUCCESS;
 }
