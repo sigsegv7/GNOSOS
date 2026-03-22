@@ -31,6 +31,9 @@
 #define UNIT_MIB 0x100000
 #define UNIT_KIB 0x400
 
+/* Constants */
+#define PAGESIZE 4096
+
 extern EFI_SYSTEM_TABLE *gST;
 extern EFI_BOOT_SERVICES *gBS;
 
