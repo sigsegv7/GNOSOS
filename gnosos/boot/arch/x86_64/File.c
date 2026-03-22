@@ -95,8 +95,8 @@ FileServiceGetLength(EFI_FILE_HANDLE Handle)
 
     /* Seek all the way to the end */
     Status = Handle->SetPosition(
-            Handle,
-            0xFFFFFFFFFFFFFFFF
+        Handle,
+        0xFFFFFFFFFFFFFFFF
     );
 
     if (EFI_ERROR(Status)){
