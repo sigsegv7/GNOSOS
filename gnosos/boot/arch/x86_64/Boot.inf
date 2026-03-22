@@ -29,6 +29,7 @@
     Loader.h
     File.h
     Common.h
+    Elf.h
 
 [Packages]
   MdePkg/MdePkg.dec
