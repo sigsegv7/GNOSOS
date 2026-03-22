@@ -14,6 +14,11 @@
 #include <Uefi.h>
 #include <Library/UefiLib.h>
 
+/* Storage size units */
+#define UNIT_GIB 0x40000000
+#define UNIT_MIB 0x100000
+#define UNIT_KIB 0x400
+
 /* Knobs and settings */
 #define QUICKSTRAP_TARGET L"dtkrnl.sys"
 
