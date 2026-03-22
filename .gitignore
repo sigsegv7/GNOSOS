@@ -1,0 +1,5 @@
+*.o
+*.d
+*.EFI
+*.img
+/gnosos/var
