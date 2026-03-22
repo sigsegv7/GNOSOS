@@ -99,7 +99,7 @@ FileServiceGetLength(EFI_FILE_HANDLE Handle)
         0xFFFFFFFFFFFFFFFF
     );
 
-    if (EFI_ERROR(Status)){
+    if (EFI_ERROR(Status)) {
         return 0;
     }
 
@@ -109,17 +109,17 @@ FileServiceGetLength(EFI_FILE_HANDLE Handle)
         &FileSize
     );
 
-    if (EFI_ERROR(Status)){
+    if (EFI_ERROR(Status)) {
         return 0;
     }
 
     /* Restore the old position */
     Status = Handle->SetPosition(
-            Handle,
-            OldPosition
+        Handle,
+        OldPosition
     );
 
-    if (EFI_ERROR(Status)){
+    if (EFI_ERROR(Status)) {
         return 0;
     }
 
