@@ -16,6 +16,7 @@
 
 /* Knobs and settings */
 #define QUICKSTRAP_TARGET L"dtkrnl.sys"
+#define QUICKSTRAP_DEBUG  1
 
 /* Pointer offset macros */
 #define PTR_OFFSET(p, off) ((void *)(char *)(p) + (off))
@@ -40,5 +41,13 @@ extern EFI_BOOT_SERVICES *gBS;
 /* Print an informational message */
 #define PRINT_INFO(Fmt, ...) \
     Print(L"* " Fmt, ##__VA_ARGS__)
+
+#if QUICKSTRAP_DEBUG
+#define PRINT_DEBUG(Fmt, ...)   \
+    Print(L"% " Fmt, ##__VA_ARGS__)
+#else
+#define PRINT_DEBUG(Fmt, ...)    \
+    (VOID)0
+#endif
 
 #endif  /* !_CORE_COMMON_H_ */
