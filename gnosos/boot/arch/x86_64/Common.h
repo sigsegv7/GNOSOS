@@ -29,4 +29,8 @@ extern EFI_BOOT_SERVICES *gBS;
 #define PRINT_FATAL(Fmt, ...) \
     Print(L"Fatal: " Fmt, ##__VA_ARGS__)
 
+/* Print an informational message */
+#define PRINT_INFO(Fmt, ...) \
+    Print(L"* " Fmt, ##__VA_ARGS__)
+
 #endif  /* !_CORE_COMMON_H_ */
