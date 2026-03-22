@@ -12,8 +12,9 @@
 #include <Library/UefiLib.h>
 #include <Guid/FileInfo.h>
 #include <Protocol/LoadedImage.h>
-#include "File.h"
+#include "Loader.h"
 #include "Common.h"
+#include "File.h"
 
 /*
  * Halt and catch fire
@@ -30,7 +31,6 @@ EFI_STATUS EFIAPI
 UefiMain(EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable)
 {
     EFI_STATUS Status;
-    EFI_FILE_HANDLE Handle;
 
     Status = FileServiceInitialize(ImageHandle);
     if (EFI_ERROR(Status)) {
@@ -38,13 +38,12 @@ UefiMain(EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable)
         Hcf();
     }
 
-    Status = FileServiceOpen(QUICKSTRAP_TARGET, &Handle);
+    Status = LoaderPrepare();
     if (EFI_ERROR(Status)) {
-        PRINT_FATAL("Failed to open QUICKSTRAP_TARGET\n");
         Hcf();
     }
 
-    Print(L"Hello, World! %d\n", FileServiceGetLength(Handle));
+    Print(L"Hello, World!\n");
     for (;;);
     return 0;
 }

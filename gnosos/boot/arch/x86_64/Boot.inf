@@ -25,6 +25,8 @@
 [Sources]
     Boot.c
     File.c
+    Loader.c
+    Loader.h
     File.h
     Common.h
 
