@@ -15,11 +15,19 @@
 #include "File.h"
 #include "Loader.h"
 
+/* Length of kernel binary in bytes */
+static UINTN KernelLength = 0;
+
 EFI_STATUS
 LoaderPrepare(void)
 {
     EFI_STATUS Status;
     EFI_FILE_HANDLE FileHandle;
+
+    /* Only run once */
+    if (KernelLength > 0) {
+        return EFI_SUCCESS;
+    }
 
     Status = FileServiceOpen(QUICKSTRAP_TARGET, &FileHandle);
     if (EFI_ERROR(Status)) {
@@ -27,5 +35,6 @@ LoaderPrepare(void)
         return Status;
     }
 
+    KernelLength = FileServiceGetLength(FileHandle);
     return EFI_SUCCESS;
 }
