@@ -148,6 +148,14 @@ UefiMain(EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable)
     }
 
     QueryMemoryMap();
+    Status = gBS->ExitBootServices(
+        ImageHandle,
+        EfiMapKey
+    );
+
+    if (EFI_ERROR(Status)) {
+        Hcf();
+    }
 
     for (;;);
     return 0;
