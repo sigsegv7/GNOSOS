@@ -43,7 +43,6 @@ UefiMain(EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable)
         Hcf();
     }
 
-    Print(L"Hello, World!\n");
     for (;;);
     return 0;
 }
