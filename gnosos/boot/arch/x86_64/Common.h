@@ -15,8 +15,9 @@
 #include <Library/UefiLib.h>
 
 /* Knobs and settings */
-#define QUICKSTRAP_TARGET L"dtkrnl.sys"
-#define QUICKSTRAP_DEBUG  1
+#define QUICKSTRAP_TARGET    L"dtkrnl.sys"
+#define QUICKSTRAP_DEBUG     1
+#define QUICKSTRAP_DEBUG_MAP 0
 
 /* Pointer offset macros */
 #define PTR_OFFSET(p, off) ((void *)(char *)(p) + (off))
