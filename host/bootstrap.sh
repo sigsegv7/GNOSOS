@@ -27,7 +27,6 @@ check_deps() {
     done
 }
 
-
 #
 # Bootstrap the OS
 #
